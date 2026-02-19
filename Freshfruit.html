@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshFruit S.A.S</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(90deg, #ff4fa3, #7a5cff);
+    padding: 15px;
+    text-align: center;
+}
+
+/* LOGO AJUSTADO */
+.logo {
+    width: 130px;   /* 🔹 Tamaño ajustado aquí */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+nav {
+    background-color: #7a5cff;
+    padding: 10px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+section {
+    padding: 40px;
+    background: white;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.productos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #f9f9f9;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+button {
+    background-color: #ff4fa3;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+footer {
+    background: linear-gradient(90deg, #ff4fa3, #7a5cff);
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+.whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25d366;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+input {
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+</style>
+
+<script>
+let carrito = [];
+
+function agregarProducto(nombre, precio){
+    carrito.push({nombre, precio});
+    mostrarCarrito();
+}
+
+function eliminarProducto(index){
+    carrito.splice(index, 1);
+    mostrarCarrito();
+}
+
+function vaciarCarrito(){
+    carrito = [];
+    mostrarCarrito();
+}
+
+function mostrarCarrito(){
+    let lista = document.getElementById("listaCarrito");
+    let total = 0;
+    lista.innerHTML = "";
+
+    carrito.forEach((producto, index) => {
+        let item = document.createElement("li");
+        item.innerHTML = `
+            ${producto.nombre} - $${producto.precio.toLocaleString()}
+            <button onclick=\"eliminarProducto(${index})\">❌</button>
+        `;
+        lista.appendChild(item);
+        total += producto.precio;
+    });
+
+    document.getElementById("total").textContent = total.toLocaleString();
+}
+
+function enviarPedido(event){
+    event.preventDefault();
+
+    if(carrito.length === 0){
+        alert("Tu carrito está vacío.");
+        return;
+    }
+
+    alert("¡Pedido enviado con éxito!");
+    vaciarCarrito();
+    document.querySelector("form").reset();
+}
+</script>
+
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" alt="FreshFruit Logo" class="logo">
+</header>
+
+<nav>
+<a href="#nosotros">Nosotros</a>
+<a href="#productos">Productos</a>
+<a href="#carrito">Carrito</a>
+<a href="#pedido">Pedidos</a>
+<a href="#contacto">Contacto</a>
+</nav>
+
+<section id="nosotros">
+<h2>Sobre Nosotros</h2>
+<p>FreshFruit S.A.S es una empresa dedicada a promover alimentación saludable mediante productos naturales y nutritivos.</p>
+</section>
+<section id="productos">
+<h2>Productos</h2>
+<div class="productos">
+
+<div class="card">
+<h3>Jugos Naturales</h3>
+<p>12 oz - $13.000</p>
+<p>16 oz - $15.000</p>
+<p>20 oz - $18.000</p>
+<button onclick="agregarProducto('Jugo 12oz',13000)">12 oz</button>
+<button onclick="agregarProducto('Jugo 16oz',15000)">16 oz</button>
+<button onclick="agregarProducto('Jugo 20oz',18000)">20 oz</button>
+</div>
+
+<div class="card">
+<h3>Wafles</h3>
+<p>$12.000</p>
+<button onclick="agregarProducto('Wafles',12000)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Panqueques</h3>
+<p>$13.000</p>
+<button onclick="agregarProducto('Panqueques',13000)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Barras Nutritivas</h3>
+<p>$5.000</p>
+<button onclick="agregarProducto('Barras',5000)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Batidos</h3>
+<p>12 oz - $15.000</p>
+<p>16 oz - $18.000</p>
+<p>20 oz - $20.000</p>
+<button onclick="agregarProducto('Batido 12oz',15000)">12 oz</button>
+<button onclick="agregarProducto('Batido 16oz',18000)">16 oz</button>
+<button onclick="agregarProducto('Batido 20oz',20000)">20 oz</button>
+</div>
+
+<div class="card">
+<h3>Ensaladas Frescas</h3>
+<p>$6.000</p>
+<button onclick="agregarProducto('Ensalada',6000)">Agregar</button>
+</div>
+
+<div class="card">
+<h3>Fresas con crema</h3>
+<p>12 oz - $10.000</p>
+<p>16 oz - $13.000</p>
+<p>20 oz - $15.000</p>
+<button onclick="agregarProducto('Fresas 12oz',10000)">12 oz</button>
+<button onclick="agregarProducto('Fresas 16oz',13000)">16 oz</button>
+<button onclick="agregarProducto('Fresas 20oz',15000)">20 oz</button>
+</div>
+
+</div>
+</section>
+</div>
+
+</div>
+</section>
+
+<section id="carrito">
+<h2>Carrito de compras</h2>
+<ul id="listaCarrito"></ul>
+<h3>Total: $<span id="total">0</span></h3>
+<button onclick="vaciarCarrito()">Vaciar Carrito</button>
+</section>
+
+<section id="pedido">
+<h2>Formulario de pedido</h2>
+<form onsubmit="enviarPedido(event)">
+<label>Nombre:</label><br>
+<input type="text" required><br><br>
+
+<label>Dirección:</label><br>
+<input type="text" required><br><br>
+
+<label>Teléfono:</label><br>
+<input type="tel" required><br><br>
+
+<button type="submit">Enviar Pedido</button>
+</form>
+</section>
+
+<section id="contacto">
+<h2>Contacto</h2>
+<p>📍 Urabá Antioquia</p>
+<p>📞 +573238019664</p>
+</section>
+
+<footer>
+<p>Proyecto escolar - FreshFruit S.A.S</p>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/573238019664" target="_blank">💬</a>
+
+</body>
+</html>
